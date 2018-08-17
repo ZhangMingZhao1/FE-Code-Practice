@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+
+<script>
+    let checkLogin = function () {
+        return new Promise(function (resolve,reject) {
+
+            let flag = document.cookie.indexOf("userId") > -1 ? true : false;
+
+            flag = true;
+            if (flag) {
+                resolve({
+                    status: 0,
+                    result: true
+                })
+            } else {
+                reject("error");
+            }
+        })
+    };
+
+    let getUserInfo = ()=>{
+        return new Promise((resolve,reject)=>{
+            let userInfo = {
+                userId:'101'
+            }
+            resolve(userInfo)
+        });
+    }
+    checkLogin().then((res)=>{
+        if(res.status==0) {
+            console.log("login success");
+            return getUserInfo();
+        }//通过这种链式回调补偿传统的层层回调灾难
+    }).catch((error)=>{
+        console.log(`errs:${error}`)
+    }).then((res2)=>{
+        console.log(`userId:${res2.userId}`);
+    })
+
+    //另一种写法
+    Promise.all([checkLogin(),getUserInfo()]).then(([res1,res2])=>{
+        console.log(`result:${res1.result},result2:${res2.userId}`);
+    })
+</script>
+</body>
+</html>
