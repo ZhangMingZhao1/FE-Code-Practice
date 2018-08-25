@@ -33,6 +33,20 @@ class EventEmitter {
     this.events[name] = cbs;
   }
 
+  on(name,cb) {
+    const cbs = this.events[name];
+    cbs.push(cb);
+    this.events[name] = cbs;
+  }
+
+  emit(name,...args) {
+    const cbs = this.events[name];
+
+    cbs.forEach((cb) => {
+      cb(...args);
+    })
+  }
+
   emit(name, ...args) {
     //针对该事件，执行每个回调函数
     const cbs = this.events[name] || []
