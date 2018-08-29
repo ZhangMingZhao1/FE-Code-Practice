@@ -2,6 +2,8 @@ setTimeout(function(){
     console.log('定时器开始啦')
 });
 
+
+
 new Promise(function(resolve){
     console.log('马上执行for循环啦');
     for(var i = 0; i < 10000; i++){
