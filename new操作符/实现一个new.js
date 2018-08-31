@@ -12,7 +12,7 @@ function Foo(){
     this.age = 18;
 }
 
-let foo = new Foo();
+let foo = newFn(Foo);
 
 console.log(foo.type,foo.age);
 

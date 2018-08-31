@@ -27,7 +27,7 @@ function deepClone(data){
   for(let key in data) {
     if(data.hasOwnProperty(key)) {
       if(data[key] && typeof data[key] === 'object') {
-        res[key] = data.constructor === Array? []: {};
+        res[key] = data[key].constructor === Array? []: {};
         res[key] = deepClone(data[key]);
       }else {
         res[key] = data[key];
