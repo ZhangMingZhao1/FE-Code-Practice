@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            height: 5000px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+
+
+<script>
+
+/*
+通过监听 scroll 事件，检测滚动位置，根据滚动位置显示返回顶部按钮
+通过监听 resize 事件，对某些自适应页面调整DOM的渲染（通过CSS实现的自适应不再此范围内）
+通过监听 keyup 事件，监听文字输入并调用接口进行模糊匹配
+DOM操作是很耗费性能的，如果在监听中，做了一些DOM操作，那无疑会给浏览器造成大量性能损失。
+
+
+定义：触发函数事件后，短时间间隔内无法连续调用，只有上一次函数执行后，过了规定的时间间隔，才能进行下一次的函数调用。
+原理：对处理函数进行延时操作，若设定的延时到来之前，再次触发事件，则清除上一次的延时操作定时器，重新定时。
+*/
+let startTime = Date.now(); //开始时间
+let time = 500; //间隔时间
+let timer;
+window.onscroll = function throttle(){
+    let currentTime = Date.now();
+    if(currentTime - startTime >= time){
+        let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        console.log('滚动条位置：' + scrollTop);
+        startTime = currentTime;
+    }else{
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            throttle()
+        }, 50);
+    }
+}
+
+// function _delay(){//函数节流
+//     clearTimeout(delay);
+//     delay = setTimeout(() => {
+//        _loadImg();
+//     },time)
+// };
+
+</script>
+</body>
+</html>
