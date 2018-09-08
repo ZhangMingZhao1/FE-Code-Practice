@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    #div1{
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1"></div> 
+    <script>
+    window.onload = function(){
+        var moveBox = document.getElementById('div1');
+        var windowH = window.innerHeight,
+            windowW = window.innerWidth;
+        // 当鼠标在moveBox里面按下时
+        moveBox.onmousedown = function(event){
+            event = event || window.event;
+            //event.clientX是点击的点的坐标,this.offsetLeft是this这个对象在这里即div左上角离父元素的距离
+            var distanceX = event.clientX - this.offsetLeft,
+                distanceY = event.clientY - this.offsetTop;
+                // console.log('event.clientX: ', event.clientX);
+                // console.log('this.offsetLeft: ', this.offsetLeft);
+                // console.log('distanceX: ', distanceX);
+            // 当鼠标在document任意位置时，连续触发    
+            document.onmousemove = function(event_2){
+                event_2 = event_2 || window.event;
+                var left = event_2.clientX - distanceX,
+                    top = event_2.clientY - distanceY;
+                if (left < 0) left = 0;
+                if (top < 0) top = 0;
+                if (left > windowW - moveBox.offsetWidth) left = windowW - moveBox.offsetWidth;
+                if (top > windowH - moveBox.offsetHeight) top = windowH - moveBox.offsetHeight;
+                moveBox.style.left = left + 'px';
+                moveBox.style.top = top + 'px'
+            // 当鼠标离开时,移除鼠标移动事件；
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+      }
+    }
+    
+    </script>
+</body>
+</html>
+
