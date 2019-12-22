@@ -32,4 +32,5 @@ const mapDispatchToProps= (dispatch)=>{
         subClick: ()=>dispatch(Sub_Num())
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(DataShow);
+const HOCDataShow = connect(mapStateToProps,mapDispatchToProps)(DataShow);
+export default HOCDataShow;
