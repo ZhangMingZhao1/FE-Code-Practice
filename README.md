@@ -1,1 +1,1 @@
-# Native-JS-Practice
+# FE-Code-Practice
