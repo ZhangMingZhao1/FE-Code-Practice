@@ -1,0 +1,38 @@
+<script>
+  function ajax(content) {
+    console.log('ajax request ' + content)
+  }
+  //函数防抖是某一段时间内只执行一次，而函数节流是间隔时间执行。
+  // 节流，法师放大招，读条没读完还按大招，重新读条，只有一次间隔读条结束放大大招。不然每次都是开大招读条，却开不出大招效果。
+  function debounce(fn, delay) {
+    let timer = null;
+    return function (args) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        fn.apply(this, args)
+      }, delay);
+    }
+  }
+
+  // let inputb = document.getElementById('debounce')
+
+  // let debounceAjax = debounce(ajax, 500)
+
+  // inputb.addEventListener('keyup', function (e) {
+  //   debounceAjax(e.target.value)
+  // })
+  // 防抖，fps射击游戏，就算你不断点击，射速还是在规定时间内射出子弹
+  function throttle(fn, delay) {
+    let canRun = true;
+    return function () {
+      if (!canRun) return;
+      canRun = false;
+      setTimeout(() => {
+        fn.apply(this, arguments);
+        canRun = true;
+      }, delay);
+    }
+  }
+</script>
