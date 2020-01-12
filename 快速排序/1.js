@@ -1,3 +1,10 @@
+/**
+ * 可以参考我的博客（大学时期写的C版本）：https://blog.csdn.net/major_zhang/article/details/51714777
+ * 关于优化：1. 基准数的选择 2.混合算法，当分割到一定程度上用插入排序，因为相同的书，有序，都会导致快排策略变得更糟
+ *
+ *
+ *
+ */
 let a = [3, 2, 1, 5, 8, 9, 10, 17, 16, 15];
 // function quickSort(left, right) {
 //   let i, j, t, tmp;
