@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import "./App.css";
-
 function App() {
   //   before useEffect
   //   after useEffect
@@ -18,9 +16,10 @@ function App() {
 
   return (
     <div onClick={() => setState(state + 1)}>
-      {pre.current}
+      <div>pre:{pre.current}</div>
+
       {"   "}
-      {state}
+      <div>cur:{state}</div>
     </div>
   );
 }
