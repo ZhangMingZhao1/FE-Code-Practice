@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            height: 5000px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+
+
+<script>
+
+/*
+定义：多次触发事件后，事件处理函数只执行一次，并且是在触发操作结束时执行。
+原理：对处理函数进行延时操作，若设定的延时到来之前，再次触发事件，则清除上一次的延时操作定时器，重新定时。
+*/
+let timer;
+window.onscroll = function() {
+    if(timer) {
+        clearTimeout(timer);
+    }
+    timer = setTimeout(function() {
+        //滑动条位置
+        let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        console.log('滑动条位置: ' + scrollTop);
+        timer = undefined;
+    },200)
+}
+
+// function _delay(){//函数节流
+//     clearTimeout(delay);
+//     delay = setTimeout(() => {
+//        _loadImg();
+//     },time)
+// };
+
+</script>
+</body>
+</html>
