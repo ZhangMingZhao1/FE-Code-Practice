@@ -1,0 +1,21 @@
+<body>
+  <!-- 顶点着色器源码 -->
+  <script type="shader-source" id="vertexShader">
+    void main(){
+  		//声明顶点位置
+  		gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+  		//声明要绘制的点的大小。
+  		gl_PointSize = 10.0;
+  	}
+	</script>
+
+  <!-- 片元着色器源码 -->
+  <script type="shader-source" id="fragmentShader">
+    void main(){
+	 	//设置像素颜色为红色
+		gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); 
+	}
+	</script>
+
+  <canvas id="canvas"></canvas>
+</body>
