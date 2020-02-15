@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Three.js geojson 中国地图数据可视化</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #tan {
+      position: absolute;
+      z-index: 102;
+      color: #00aeef;
+      background: rgba(45, 45, 45, 0.6);
+      padding: 20px;
+      border-radius: 5px;
+    }
+  </style>
+  <script src="http://www.yanhuangxueyuan.com/versions/threejsR92/build/three.min.js"></script>
+  <script src="http://www.yanhuangxueyuan.com/versions/threejsR92/examples/js/controls/OrbitControls.js"></script>
+
+  <script src="http://www.yanhuangxueyuan.com/js/vue@2.5.16.min.js"></script>
+
+</head>
+
+<body>
+  <div id="app" style="position:absolute;">
+    <div id="tan" style="" v-if="bool" :style="{left:x+'px',top:y+'px'}">
+      <div>省份&nbsp;:&nbsp;&nbsp;&nbsp;{{ name }}</div>
+      <br>
+      <div>GDP&nbsp;:&nbsp;&nbsp;&nbsp;{{ gdp }}</div>
+    </div>
+  </div>
+  <script>
+    eval(function (p, a, c, k, e, d) {
+      e = function (c) {
+        return (c < a ? "" : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(
+          36))
+      };
+      if (!''.replace(/^/, String)) {
+        while (c--) d[e(c)] = k[c] || e(c);
+        k = [function (e) {
+          return d[e]
+        }];
+        e = function () {
+          return '\\w+'
+        };
+        c = 1;
+      };
+      while (c--)
+        if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+      return p;
+    }(
+      '5 B=3 7.23();5 n=3 7.1t();5 Y=[];5 J=3 7.22();J.24(\'10\');5 26=T;J.K(\'./1.10\',G(P){J.K(\'./0.10\',G(R){R.1q.v(H=>{w(H.d.1L==="25"){b E=[];b I=[];b D=[];H.d.1K[0].v(a=>{I.l(3 7.1Q(a[0],a[1],0));D.l(3 7.1e(a[0],a[1]))});b d=3 7.1N();d.1D=I;d.1E=C;b r=3 7.1B({A:1C,});b t=3 7.1H(d,r);t.m.z=0.1f;n.f(t);n.f(t.18().1I(-0.8));E.l(3 7.1F(D));5 Q=3 7.1G(E,{1W:-0.8,1X:2,1Y:S});b O=3 7.1V({A:1g,});b c=3 7.Z(Q,O);c.g=H.12.g;P.v((a,13)=>{w(a.g===c.g){c.q=a.q[0]}});n.f(c);Y.l(c)}w(H.d.1L==="21"){b E=[];H.d.1K.v(1P=>{b I=[];b D=[];1P[0].v(a=>{I.l(3 7.1Q(a[0],a[1],0));D.l(3 7.1e(a[0],a[1]))});b d=3 7.1N();d.1D=I;d.1E=C;b r=3 7.1B({A:1C,});b t=3 7.1H(d,r);t.m.z=0.1f;n.f(t);n.f(t.18().1I(-0.8));E.l(3 7.1F(D))});5 Q=3 7.1G(E,{1W:-0.8,1X:2,1Y:S});b O=3 7.1V({A:1g,});b c=3 7.Z(Q,O);n.f(c);Y.l(c)}});B.f(n);n.m.M(-29,-2a,0);5 15=3 7.28();5 1o=15.K(\'./4.1S\');5 1r=15.K(\'./2e.1S\');J.K(\'./1.10\',G(P){5 1s=3 7.2c("1Z",20,[]);P.v((a,13)=>{w(13%1===0){5 h=a.q[0]/ 1w /2+4;5 d=3 7.1x(0.6,h);5 r=3 7.1k({1y:1o,1v:C,2d:7.2f,});5 c=3 7.Z(d,r);c.2b(-1A.1m/2);c.m.z=h/2;5 p=3 7.1t();p.f(c,c.18().27(1A.1m/2));5 1j=3 7.1k({1y:1r,1v:C,});5 1p=3 7.1x(1,1);5 1b=3 7.Z(1p,1j);1b.m.z=0.1f;p.f(1b);p.g=c.2H;n.f(p);5 19=[];1l(b i=0;i<20;i++){19.l(i)}5 1a=[];1l(b i=0;i<a.q.1O;i++){1a.l(1,1,a.q[i]/1T)}5 1u=3 7.2E(p.g+\'.2F\',19,1a);1s.2M.l(1u);R.1q.v(11=>{w(11.12.g===a.g){p.m.x=11.12.1z[0];p.m.y=11.12.1z[1]}})}})})})});5 16=3 7.2K(1n);16.m.M(2J,2L,1w);B.f(16);5 1U=3 7.2I(1n,0.9);B.f(1U);5 14=o.U;5 17=o.V;5 k=14/17;5 s=20;5 j=3 7.2N(-s*k,s*k,s,-s,1,1T);j.m.M(-0.2U,-2T,2V);j.2O(B.m);5 N=3 7.2Q({2S:C});N.1M(14,17);2R.2P.2D(N.2n);5 2m=3 7.2o();G L(){N.L(B,j);2q(L)}L();5 2G=3 7.2l(j);5 u=3 2h({2g:\'#2i\',R:{x:1R,y:1R,1d:S,2k:T,g:\'\',q:T,},});5 X=T;G 1J(e){w(X){X.r.A.M(1g);u.1d=S}5 1i=e.2j;5 1h=e.2r;u.x=1i+20;u.y=1h+20;5 x=(1i/o.U)*2-1;5 y=-(1h/o.V)*2+1;5 1c=3 7.2z();1c.2y(3 7.1e(x,y),j);5 F=1c.2A(Y);w(F.1O>0){u.1d=C;X=F[0].W;F[0].W.r.A.M(2C);u.g=F[0].W.g;u.q=F[0].W.q}}2B(\'2x\',1J);o.2t=G(){N.1M(o.U,o.V);k=(o.U)/(o.V);j.2s=-s*k;j.2u=s*k;j.2w=s;j.2v=-s;j.2p();L()};',
+      62, 182,
+      '|||new||var||THREE|||elem|let|mesh|geometry||add|name|||camera||push|position|group|window|groupMesh|gdp|material||line|vm|forEach|if||||color|scene|true|vector2Arr|shapesArr|intersects|function|country|vector3Arr|loader|load|render|set|renderer|meshMaterial|dataGDP|meshGeometory|data|false|null|innerWidth|innerHeight|object|lastMesh|rayMesh|Mesh|json|province|properties|index|width|textureLoader|point|height|clone|timeArr|scaleArr|cirMesh|raycaster|bool|Vector2|01|0x111111|Sy|Sx|material2|MeshBasicMaterial|for|PI|0xffffff|texture|geometry2|features|texture2|clip|Group|scaleTrack|transparent|300|PlaneGeometry|map|cp|Math|LineBasicMaterial|0x666666|vertices|verticesNeedUpdate|Shape|ExtrudeGeometry|LineLoop|translateZ|choose|coordinates|type|setSize|Geometry|length|area|Vector3|500|png|1000|ambient|MeshPhongMaterial|amount|curveSegments|bevelEnabled|default||MultiPolygon|FileLoader|Scene|setResponseType|Polygon|mixer|rotateY|TextureLoader|105|30|rotateX|AnimationClip|side|sprite2|DoubleSide|el|Vue|app|clientX|chooseMesh|OrbitControls|clock|domElement|Clock|updateProjectionMatrix|requestAnimationFrame|clientY|left|onresize|right|bottom|top|mousemove|setFromCamera|Raycaster|intersectObjects|addEventListener|0x000000|appendChild|KeyframeTrack|scale|controls|uuid|AmbientLight|400|PointLight|200|tracks|OrthographicCamera|lookAt|body|WebGLRenderer|document|antialias|58|81|84'
+      .split('|'), 0, {}))
+  </script>
+</body>
+
+</html>
