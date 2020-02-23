@@ -28,15 +28,13 @@ renderer.setClearColor(0xffffff, 0);
 // renderer.setSize(window.innerWidth, window.innerHeight); //设置渲染器的宽高
 
 
-// 初始化太阳配置
-let sunMaterialSkin = THREE.TextureLoader('../img/sunSkin.jpg', {}, () => {
-  renderer.render(scene, camera);
-});
+// !初始化太阳配置
+let sunMaterialSkin = new THREE.TextureLoader().load('../img/sunSkin.jpg');
 
 let geometry = new THREE.SphereGeometry(12, 16, 16);
-let material = new THREE.MeshLambertMaterial({
+let material = new THREE.MeshBasicMaterial({
   /*color: 0xffff00,*/
-  emissive: 0xdd4422,
+  // emissive: 0xdd4422,
   map: sunMaterialSkin
 });
 // let material = new THREE.MeshBasicMaterial({
@@ -48,7 +46,14 @@ Sun.castShadow = true;
 Sun.receiveShadow = true;
 scene.add(Sun);
 
+// !光源
 
+//环境光
+let ambient = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambient);
+/*太阳光*/
+let sunLight = new THREE.PointLight(0xddddaa, 1.5, 500);
+scene.add(sunLight);
 
 let control;
 const clock = new THREE.Clock(); //用于计算两次animationFrame之间间隔时间
@@ -79,11 +84,35 @@ function initStar(name, speed, angle, color, distance, radius, ringMsg) {
   scene.add(mesh);
   return star;
 }
+let Mercury, //水
+  Venus, //金
+  Earth,
+  Mars, //火
+  Jupiter, //木
+  Saturn, //土
+  Uranus, //天王
+  Neptune, //海王
+  stars = [];
 
-const stars = [];
-// 创建地球
-const Earth = initStar('Earth', 0.010, 0, 'rgb(0,0,255)', 40, 5);
+// !创建地球和其他八大行星
+Earth = initStar('Earth', 0.010, 0, 'rgb(0,0,255)', 40, 5);
 stars.push(Earth);
+Mercury = initStar('Mercury', 0.02, 0, 'rgb(124,131,203)', 20, 2);
+stars.push(Mercury);
+Venus = initStar('Venus', 0.012, 0, 'rgb(190,138,44)', 30, 4);
+stars.push(Venus);
+Earth = initStar('Earth', 0.010, 0, 'rgb(46,69,119)', 40, 5);
+stars.push(Earth);
+Mars = initStar('Mars', 0.008, 0, 'rgb(210,81,16)', 50, 4);
+stars.push(Mars);
+Jupiter = initStar('Jupiter', 0.006, 0, 'rgb(254,208,101)', 70, 9);
+stars.push(Jupiter);
+
+Uranus = initStar('Uranus', 0.003, 0, 'rgb(49,168,218)', 120, 4);
+stars.push(Uranus);
+
+Neptune = initStar('Neptune', 0.002, 0, 'rgb(84,125,204)', 150, 3);
+stars.push(Neptune);
 
 /*鼠标指针指向响应*/
 function onMouseMove(event) {
