@@ -1,11 +1,16 @@
 const cameraFar = 3000; // 镜头视距
 const canvas = document.getElementById("main");
-let mouse = new THREE.Vector2(); //鼠标屏幕向量
+
 /*画布大小*/
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let scene = new THREE.Scene(); //创建场景
+
+let raycaster = new THREE.Raycaster(); //这个类用于进行raycasting（光线投射）。 光线投射用于进行鼠标拾取（在三维空间中计算出鼠标移过了什么物体）。
+let mouse = new THREE.Vector2(); //鼠标屏幕向量
+let starNames = {}; //指向显示的星星名字对象
+let displayName; //当前显示名字
 
 // 相机相关配置
 let camera = new THREE.PerspectiveCamera(
@@ -46,6 +51,20 @@ Sun.castShadow = true;
 Sun.receiveShadow = true;
 scene.add(Sun);
 
+// 太阳蒙层
+let opSun = new THREE.Mesh(
+  new THREE.SphereGeometry(14, 16, 16),
+  new THREE.MeshLambertMaterial({
+    color: 0xff0000,
+    /*emissive: 0xdd4422,*/
+    transparent: true,
+    opacity: 0.35
+  })
+);
+
+opSun.name = "Sun";
+scene.add(opSun);
+
 // !光源
 
 //环境光
@@ -63,9 +82,9 @@ const clock = new THREE.Clock(); //用于计算两次animationFrame之间间隔�
  * @param distance x轴距离
  * @param color 轨道颜色
  */
-function initStar(name, speed, angle, color, distance, radius, ringInfo) {
+function initStar(name, speed, angle, color, distance, volume, ringInfo) {
   let mesh = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 16, 16),
+    new THREE.SphereGeometry(volume, 16, 16),
     new THREE.MeshLambertMaterial({
       color
     })
@@ -93,7 +112,7 @@ function initStar(name, speed, angle, color, distance, radius, ringInfo) {
     speed,
     angle,
     distance,
-    radius,
+    volume,
     Mesh: mesh
   };
 
@@ -132,33 +151,6 @@ let Mercury, //水
   Neptune, //海王
   stars = [];
 
-// !创建地球和其他八大行星
-Earth = initStar("地球", 0.01, 0, "rgb(0,0,255)", 40, 5);
-stars.push(Earth);
-Mercury = initStar("水星", 0.02, 0, "rgb(124,131,203)", 20, 2);
-stars.push(Mercury);
-Venus = initStar("金星", 0.012, 0, "rgb(190,138,44)", 30, 4);
-stars.push(Venus);
-
-Mars = initStar("火星", 0.008, 0, "rgb(210,81,16)", 50, 4);
-stars.push(Mars);
-Jupiter = initStar("木星", 0.006, 0, "rgb(254,208,101)", 70, 9);
-stars.push(Jupiter);
-
-Uranus = initStar("天王星", 0.003, 0, "rgb(49,168,218)", 120, 4);
-stars.push(Uranus);
-
-Neptune = initStar("海王星", 0.002, 0, "rgb(84,125,204)", 150, 3);
-stars.push(Neptune);
-
-// 土星和土星环
-Saturn = initStar("土星", 0.005, 0, "rgb(210,140,39)", 100, 7, {
-  color: "rgb(136,75,30)",
-  innerRedius: 9,
-  outerRadius: 11
-});
-stars.push(Saturn);
-
 /*鼠标指针指向响应*/
 function onMouseMove(event) {
   // calculate mouse position in normalized device coordinates
@@ -166,8 +158,71 @@ function onMouseMove(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
+// ! 显示行星名字
+function starVis() {
+  /*根据行星名字和体积构造显示名字*/
+  let loader = new THREE.FontLoader();
+
+  function nameConstructor(name, volume) {
+    loader.load("../lib/helvetiker_regular.typeface.json", function(font) {
+      // console.log("font", font);
+      let geometry = new THREE.TextGeometry(name, {
+        font: font,
+        size: 4,
+        height: 4
+      });
+    });
+    let planetName = new THREE.Mesh(
+      geometry,
+      new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        side: THREE.DoubleSide
+      })
+    );
+    planetName.volume = volume;
+    planetName.visible = false;
+    starNames[name] = planetName;
+    scene.add(planetName);
+  }
+  // console.log("star", stars);
+  stars.forEach((star) => {
+    console.log(star);
+    nameConstructor(star.name, stars.volume);
+  });
+  nameConstructor("Sun", 12);
+}
 
 function init() {
+  // !创建地球和其他八大行星
+  Earth = initStar("Earth", 0.01, 0, "rgb(0,0,255)", 40, 5);
+  stars.push(Earth);
+  Mercury = initStar("shuixing", 0.02, 0, "rgb(124,131,203)", 20, 2);
+  stars.push(Mercury);
+  Venus = initStar("jinxing", 0.012, 0, "rgb(190,138,44)", 30, 4);
+  stars.push(Venus);
+
+  Mars = initStar("huoxing", 0.008, 0, "rgb(210,81,16)", 50, 4);
+  stars.push(Mars);
+  Jupiter = initStar("muxing", 0.006, 0, "rgb(254,208,101)", 70, 9);
+  stars.push(Jupiter);
+
+  Uranus = initStar("tianwangxing", 0.003, 0, "rgb(49,168,218)", 120, 4);
+  stars.push(Uranus);
+
+  Neptune = initStar("haiwangxing", 0.002, 0, "rgb(84,125,204)", 150, 3);
+  stars.push(Neptune);
+
+  // 土星和土星环
+  Saturn = initStar("tuxing", 0.005, 0, "rgb(210,140,39)", 100, 7, {
+    color: "rgb(136,75,30)",
+    innerRedius: 9,
+    outerRadius: 11
+  });
+  stars.push(Saturn);
+
+  // 初始化行星名字
+  starVis();
+
   /*镜头控制*/
   control = new THREE.FirstPersonControls(camera, canvas);
   control.movementSpeed = 100; //镜头移速
@@ -180,6 +235,63 @@ function init() {
   requestAnimationFrame(move);
 }
 
+function move() {
+  //太阳自转
+
+  Sun.rotation.y += 0.008; // 旋转网格的x轴
+  // Sun.rotation.z += 0.01; // 旋转网格的y轴
+  // 行星公转
+  stars.map((star) => revolution(star));
+
+  control.update(clock.getDelta()); //此处传入的delta是两次animationFrame的间隔时间，用于计算速度
+
+  /*限制相机在xyz正负400以内*/
+  camera.position.x = THREE.Math.clamp(camera.position.x, -400, 400);
+  camera.position.y = THREE.Math.clamp(camera.position.y, -400, 400);
+  camera.position.z = THREE.Math.clamp(camera.position.z, -400, 400);
+
+  /*鼠标指向行星显示名字*/
+  raycaster.setFromCamera(mouse, camera);
+  /*交汇点对像*/
+  let intersects = raycaster.intersectObjects(scene.children);
+  if (intersects.length > 0) {
+    /*取第一个交汇对像（最接近相机）*/
+    let obj = intersects[0].object;
+
+    let name = obj.name;
+    /*把上一个显示隐藏*/
+    displayName && (displayName.visible = false);
+
+    /*如果是有设定名字的东西*/
+    if (starNames[name]) {
+      console.log("starNames", starNames);
+      starNames[name].visible = true;
+      displayName = starNames[name];
+      /*复制行星位置*/
+      displayName.position.copy(obj.position);
+      /*文字居中*/
+      displayName.geometry.center();
+      /*显示在行星的上方（y轴）*/
+      displayName.position.y = starNames[name].volume + 4;
+      /*面向相机*/
+      displayName.lookAt(camera.position);
+    }
+  } else {
+    displayName && displayName.visible && (displayName.visible = false);
+  }
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(move);
+}
+init();
+
+window.onresize = function() {
+  // 将函数赋予window.onresize
+  camera.aspect = window.innerWidth / window.innerHeight; // 设置相机的宽高比
+  camera.updateProjectionMatrix(); // 重新计算投影矩阵
+  renderer.setSize(window.innerWidth, window.innerHeight); // 设置渲染器宽高
+};
+
 // 行星公转
 function revolution(star) {
   star.angle += star.speed;
@@ -191,34 +303,3 @@ function revolution(star) {
     star.distance * Math.cos(star.angle)
   );
 }
-
-function move() {
-  //太阳自转
-
-  Sun.rotation.y += 0.008; // 旋转网格的x轴
-  // Sun.rotation.z += 0.01; // 旋转网格的y轴
-  // 行星公转
-  stars.map((star) => revolution(star));
-
-  control.update(clock.getDelta()); //此处传入的delta是两次animationFrame的间隔时间，用于计算速度
-
-  renderer.render(scene, camera);
-  requestAnimationFrame(move);
-}
-init();
-
-// function animate() {
-//   // 定义一个animate函数
-//   requestAnimationFrame(animate); // 将animate函数作为回调函数传给requestAnimationFrame方法
-//   Sun.rotation.x += 0.01; // 旋转网格的x轴
-//   Sun.rotation.y += 0.01; // 旋转网格的y轴
-//   renderer.render(scene, camera); // 渲染
-// }
-// animate(); // 执行animate函数
-
-window.onresize = function() {
-  // 将函数赋予window.onresize
-  camera.aspect = window.innerWidth / window.innerHeight; // 设置相机的宽高比
-  camera.updateProjectionMatrix(); // 重新计算投影矩阵
-  renderer.setSize(window.innerWidth, window.innerHeight); // 设置渲染器宽高
-};
