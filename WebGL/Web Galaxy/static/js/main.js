@@ -119,7 +119,7 @@ function initStar(name, speed, angle, color, distance, volume, ringInfo) {
   // 有行星环的情况
   /*如果有碎星带*/
   if (ringInfo) {
-    console.log("进入了ring,Info为", ringInfo);
+    // console.log("进入了ring,Info为", ringInfo);
     let ring = new THREE.Mesh(
       new THREE.RingGeometry(ringInfo.innerRedius, ringInfo.outerRadius, 32, 6),
       new THREE.MeshBasicMaterial({
@@ -158,14 +158,15 @@ function onMouseMove(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
+
 // ! 显示行星名字
-function starVis() {
+function displayPlanetName() {
   /*根据行星名字和体积构造显示名字*/
   let loader = new THREE.FontLoader();
 
   function nameConstructor(name, volume) {
     loader.load("../lib/helvetiker_regular.typeface.json", function(font) {
-      // console.log("font", font);
+      console.log("font", font);
       let geometry = new THREE.TextGeometry(name, {
         font: font,
         size: 4,
@@ -184,10 +185,10 @@ function starVis() {
     starNames[name] = planetName;
     scene.add(planetName);
   }
-  // console.log("star", stars);
-  stars.forEach((star) => {
-    console.log(star);
-    nameConstructor(star.name, stars.volume);
+  // console.log("stars", stars);
+  stars.forEach((star, index) => {
+    // console.log(star, index);
+    nameConstructor(star.name, star.volume);
   });
   nameConstructor("Sun", 12);
 }
@@ -219,9 +220,9 @@ function init() {
     outerRadius: 11
   });
   stars.push(Saturn);
-
-  // 初始化行星名字
-  starVis();
+  window.addEventListener("mousemove", onMouseMove, false);
+  /*初始化指向显示名字*/
+  displayPlanetName();
 
   /*镜头控制*/
   control = new THREE.FirstPersonControls(camera, canvas);
@@ -229,7 +230,6 @@ function init() {
   control.lookSpeed = 0.125; //视角改变速度
   control.lookVertical = true; //是否允许视角上下改变
   camera.lookAt(new THREE.Vector3(0, 0, 0));
-  window.addEventListener("mousemove", onMouseMove, false);
 
   renderer.render(scene, camera);
   requestAnimationFrame(move);
@@ -237,9 +237,8 @@ function init() {
 
 function move() {
   //太阳自转
-
   Sun.rotation.y += 0.008; // 旋转网格的x轴
-  // Sun.rotation.z += 0.01; // 旋转网格的y轴
+
   // 行星公转
   stars.map((star) => revolution(star));
 
@@ -259,12 +258,13 @@ function move() {
     let obj = intersects[0].object;
 
     let name = obj.name;
+    // console.log(name);
     /*把上一个显示隐藏*/
     displayName && (displayName.visible = false);
 
     /*如果是有设定名字的东西*/
     if (starNames[name]) {
-      console.log("starNames", starNames);
+      // console.log("starNames", starNames);
       starNames[name].visible = true;
       displayName = starNames[name];
       /*复制行星位置*/
@@ -273,6 +273,7 @@ function move() {
       displayName.geometry.center();
       /*显示在行星的上方（y轴）*/
       displayName.position.y = starNames[name].volume + 4;
+      // console.log(starNames[name].volume, displayName.position.y);
       /*面向相机*/
       displayName.lookAt(camera.position);
     }
