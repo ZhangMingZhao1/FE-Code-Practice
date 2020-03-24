@@ -12,6 +12,7 @@ function A() {
 // let flag = foo instanceof Foo;
 // console.log(flag);
 
+//只有构造函数才有prototype
 function myInstanceOf(ins, father) {
   while (ins.__proto__ !== null) {
     if (ins.__proto__ === father.prototype) return true;
