@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="outer">
+        <div id="inner"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var wrap = document.getElementById("wrap");
+    var outet = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+
+    wrap.addEventListener(
+      "click",
+      function() {
+        alert("789");
+      },
+      false
+    );
+    outer.addEventListener(
+      "click",
+      function() {
+        alert("456");
+      },
+      false
+    );
+    //捕获先绑定
+    inner.addEventListener(
+      "click",
+      function() {
+        alert("inner");
+      },
+      true
+    );
+    inner.addEventListener(
+      "click",
+      function() {
+        alert("123");
+      },
+      false
+    );
+    wrap.addEventListener(
+      "click",
+      function() {
+        alert("wrap");
+      },
+      true
+    );
+    outer.addEventListener(
+      "click",
+      function() {
+        alert("outer");
+      },
+      true
+    );
+  </script>
+</html>
