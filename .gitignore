@@ -2,3 +2,5 @@
 *.idea
 /idea/
 .vscode
+*node_modules
+*.next
