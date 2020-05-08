@@ -1,7 +1,7 @@
-import React from "react";
-
-function HomePage() {
-  return <div>111</div>;
+import Link from "next/link";
+import Menu from "../app";
+function Home() {
+  return <Menu />;
 }
 
-export default HomePage;
+export default Home;
