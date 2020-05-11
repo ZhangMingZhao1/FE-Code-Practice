@@ -1,0 +1,1 @@
+let settimeout = (name,time)=> return new Promise(()=>{})
