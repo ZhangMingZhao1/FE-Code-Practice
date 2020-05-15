@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      .img-area {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+      }
+
+      .my-photo {
+        width: 500px;
+        height: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="img-area">
+        <img class="my-photo" alt="loading" src="./img/1.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" src="./img/2.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" src="./img/3.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" src="./img/4.png" />
+      </div>
+    </div>
+    <div class="scrollerFooter1">
+      没有内容了
+    </div>
+    <script>
+      function infinityScroll(footerNode, callback) {
+        var observer = new IntersectionObserver(function (changes) {
+          // 注意intersectionRatio这个属性值的判断
+          if (changes[0].intersectionRatio <= 0) return;
+
+          callback();
+        });
+        observer.observe(document.querySelector(footerNode));
+      }
+      infinityScroll(".scrollerFooter1", function () {
+        for (var i = 0; i < 3; i++) {
+          document
+            .getElementById("container")
+            .appendChild(document.getElementById("container").firstChild);
+        }
+      });
+    </script>
+  </body>
+</html>

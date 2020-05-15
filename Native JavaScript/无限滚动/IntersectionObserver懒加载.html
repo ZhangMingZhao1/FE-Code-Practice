@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      .img-area {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+      }
+
+      .my-photo {
+        width: 500px;
+        height: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/1.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/2.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/3.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/4.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/5.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/1.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/2.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/3.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/4.png" />
+      </div>
+      <div class="img-area">
+        <img class="my-photo" alt="loading" data-src="./img/5.png" />
+      </div>
+    </div>
+    <script>
+      function lazyLoad(imgClassName) {
+        const imgList = Array.from(document.querySelectorAll(imgClassName));
+        var io = new IntersectionObserver(function (ioes) {
+          ioes.forEach(function (ioe) {
+            var el = ioe.target;
+            var intersectionRatio = ioe.intersectionRatio;
+            if (intersectionRatio > 0 && intersectionRatio <= 1) {
+              if (!el.src) {
+                el.src = el.dataset.src;
+              }
+            }
+          });
+        });
+        imgList.forEach(function (item) {
+          io.observe(item);
+        });
+      }
+      lazyLoad(".my-photo");
+    </script>
+  </body>
+</html>
