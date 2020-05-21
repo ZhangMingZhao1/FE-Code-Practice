@@ -1,10 +1,23 @@
-let timeout = (name, ms) =>
-  new Promise((resolve) => {
+function light(name, ms) {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(name);
+      console.log(name, "亮了");
+      resolve();
     }, ms);
   });
-
-let r = timeout("红灯", 1000);
-let g = timeout("绿灯", 1000);
-let b = timeout("蓝灯", 1000);
+}
+function step() {
+  Promise.resolve()
+    .then(() => {
+      return light("红灯", 3000);
+    })
+    .then(() => {
+      return light("绿灯", 2000);
+    })
+    .then(() => {
+      return light("蓝灯", 2000);
+    })
+    .finally(() => {
+      step();
+    });
+}
