@@ -17,3 +17,15 @@ function request(): Promise<Response<T>> {
     // }
   );
 }
+
+interface AxiosInstance {
+  <T = any>(value: T): Promise<T>;
+}
+
+let instance: AxiosInstance;
+instance = function <T>(value: T): Promise<T> {
+  return new Promise((resolve) => {
+    resolve(value);
+  });
+};
+instance(100);
