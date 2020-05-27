@@ -2,11 +2,11 @@
   function ajax(content) {
     console.log("ajax request " + content);
   }
-  //函数节流是某一段时间内只执行一次，而函数防抖是间隔时间执行。
+
   // 防抖，法师放大招，读条没读完还按大招，重新读条，只有一次间隔读条结束放大大招。不然每次都是开大招读条，却开不出大招效果。
   function debounce(fn, delay) {
     let timer = null;
-    return function(args) {
+    return function (args) {
       if (timer) {
         clearTimeout(timer);
       }
@@ -26,7 +26,7 @@
   // 节流，fps射击游戏，就算你不断点击，射速还是在规定时间内射出子弹
   function throttle(fn, delay) {
     let canRun = true;
-    return function() {
+    return function () {
       if (!canRun) return;
       canRun = false;
       setTimeout(() => {
