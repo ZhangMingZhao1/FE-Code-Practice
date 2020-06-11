@@ -13,3 +13,19 @@ function race(entries) {
     });
   }
 }
+
+function race(entries) {
+  var Constructor = this; // race.call(Promise)
+  if (!isArray(entries)) {
+    return new Constructor(function (_, reject) {
+      return reject(new TypeError("arg must be a array"));
+    });
+  } else {
+    return new Constructor(function (resolve, reject) {
+      var length = entries.length;
+      for (var i = 0; i < length; i++) {
+        Constructor.resolve(entries[i]).then(resolve, reject);
+      }
+    });
+  }
+}
