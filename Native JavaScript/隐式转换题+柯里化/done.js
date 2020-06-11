@@ -1,17 +1,25 @@
-function add(num){
-    var sum=num,
-    
-        tmp=function(v){
-            sum+=v;
-            return tmp
-        };
-    
-    tmp.toString=function(){
-        return sum
-    };
-    
-    return tmp
+function add(num) {
+  var sum = num;
+  var tmp = function (v) {
+    sum += v;
+    return tmp;
+  };
+
+  tmp.toString = function () {
+    return sum;
+  };
+
+  return tmp;
 }
 
+console.log(add(10)(20)(50).toString()); //80
 
-console.log(add(10)(20)(50))        //80
+const A = (num1, sum = 0) => {
+  return function (num2) {
+    if (num2 !== undefined) return A(num2, sum + num1);
+    return sum + num1;
+  };
+};
+
+A(1)(2)(); //3
+A(1)(); //1
