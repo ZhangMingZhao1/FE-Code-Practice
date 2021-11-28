@@ -71,17 +71,17 @@ let len = menu_list.length;
 function dfs(rootId) {
     let curLevalAnsByRootId = [];
     for (let i = 0; i < len; i++) {
-        // 最底层的叶子节点
+        // 如果是子树，继续向下找最底层的叶子节点
         if (menu_list[i].parent_id === rootId) {
             //如果找到儿子，以儿子为根继续找儿子的儿子
-            ans.push(menu_list[i]);
+            curLevalAnsByRootId.push(menu_list[i]);
             const children = dfs(menu_list[i].id);
             if (children.length) {
                 menu_list[i].children = children;
             }
         }
     }
-    return ans;
+    return curLevalAnsByRootId;
 }
 //想象一下递归的倒置特点，不撞南墙不回头，先搜到最低根的叶子，遍历完一层之后return给上一层根节点的结
 console.log(JSON.stringify(dfs('0')));
