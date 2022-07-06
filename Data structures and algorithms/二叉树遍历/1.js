@@ -35,6 +35,20 @@ const tree = {
   }
 };
 
+const tree2 = {
+  data: 1,
+  left: {
+    data: 2,
+    left: null,
+    right: null
+  },
+  right: {
+    data: 3,
+    left: null,
+    right: null
+  }
+};
+
 /**
  * 递归法前序遍历
  */
@@ -90,11 +104,11 @@ function bfsByRcs(tree) {
     if (node) {
       output.push(node.data);
       if (node.left) {
-        // 2进队列 后进先出
+        // 2进队列 先进先出
         queue.unshift(node.left);
       }
       if (node.right) {
-        // 3进队列 先进后出
+        // 3进队列 后进后出
         queue.unshift(node.right);
       }
       console.log('xxxxx', output);
@@ -106,3 +120,19 @@ function bfsByRcs(tree) {
 }
 console.log('递归法BFS: ', bfsByRcs(tree));
 // 递归法BFS:  [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+
+//遍历法
+var bfsByWhile = function (root) { 
+  if (!root) return;
+  const queue = [];
+  const output = [];
+  queue.push(root);
+  while (queue.length) {
+    let node = queue.shift();
+    output.push(node.data);
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+  console.log('bfsByWhile',output)
+}
+bfsByWhile(tree);
