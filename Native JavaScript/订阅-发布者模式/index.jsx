@@ -4,13 +4,13 @@ const sayHi2 = (name) => console.log(`Good night, ${name}`)
 
 emitter.on('hi', sayHi)
 emitter.on('hi', sayHi2)
-emitter.emit('hi', 'ScriptOJ')
-// => Hello ScriptOJ
-// => Good night, ScriptOJ
+emitter.emit('hi', 'DD')
+// => Hello DD
+// => Good night, DD
 
 emitter.off('hi', sayHi)
-emitter.emit('hi', 'ScriptOJ')
-// => Good night, ScriptOJ
+emitter.emit('hi', 'DD')
+// => Good night, DD
 
 const emitter2 = new EventEmitter()
 emitter2.on('hi', (name, age) => {
