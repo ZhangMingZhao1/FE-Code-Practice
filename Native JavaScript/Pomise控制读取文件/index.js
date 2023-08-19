@@ -2,7 +2,10 @@ const fs = require("fs");
 
 function readFile(fileName) {
     return new Promise(function(resolve,reject) {
-        fs.readFile("in.txt",{encoding:"utf8"},function(err,data) {
+        fs.readFile("in.txt", { encoding: "utf8" }, function (err, data) {
+            if (err) {
+                reject(err);
+            }
             resolve(data)
         })
     })
