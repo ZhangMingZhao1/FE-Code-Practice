@@ -18,7 +18,7 @@
                 return true;
             }
         }
-        memo[start] = 0;
+        memo[start] = false;
         return false;
     }
     return canBreak(0);

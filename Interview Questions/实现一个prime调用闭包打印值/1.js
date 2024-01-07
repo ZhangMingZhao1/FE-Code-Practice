@@ -8,7 +8,7 @@ const prime = function () {
           flag = 1;
         }
       }
-      if (flag === 0) {
+      if (flag === 0) {  
         return index++;
       } else {
         index++;
@@ -18,12 +18,19 @@ const prime = function () {
   };
 };
 
-const prime1 = prime();
-console.log(prime1());
-console.log(prime1());
-console.log(prime1());
-console.log(prime1());
-console.log(prime1());
-console.log(prime1());
-console.log(prime1());
-console.log(prime1());
+const primeIns = prime();
+
+
+
+
+console.log(primeIns()); 2
+console.log(primeIns()); 3
+console.log(primeIns()); 5 
+console.log(primeIns()); 7
+
+const primeIns2 = prime();
+
+
+console.log(primeIns2());
+console.log(primeIns2());
+console.log(primeIns2());
